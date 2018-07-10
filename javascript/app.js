@@ -52,14 +52,38 @@ $(function() {
        
         var timer = 20;
         var timerID;
+        var timerGo = false;
         var unanswered = 0;
         var right = 0;
         var wrong = 0;
-        var index = Math.floor(Math.random() *game.length);
-        var pick = game[index];
+        
+        $('.reset').hide();
+        
+        $('.start').on('click', function() {
+            $('.start').hide();
+            $('.start-pic').hide();
+            startTimer();
+        })
       
+      function startTimer() {
+          if(!timerGo) {
+            timerID = setInterval(countDown, 1000);
+            timerGo = true;
+          }
+      }
       
-    console.log(game[index]);
-    console.log(pick.question);
+      function countDown() {
+          $('.timer').html('<h2>Hurry up please... ' + timer + '</h2>')
+          timer--;
+          console.log(timer)
+          if(timer === -1) {
+              stopTimer();
+          }
+      }
 
+      function stopTimer() {
+          timerGo = false;
+          clearInterval(timerID);
+          $('.timer').html('<h2>You Took to long!');
+      }
 });

@@ -56,14 +56,14 @@ $(function() {
         var unanswered = 0;
         var right = 0;
         var wrong = 0;
-        
+        var currentQuestion = 0;
+        var userGuess = [];
+
+        $('answers').hide();
+        $('.questions').hide();
         $('.reset').hide();
         
-        $('.start').on('click', function() {
-            $('.start').hide();
-            $('.start-pic').hide();
-            startTimer();
-        })
+   console.log(game[currentQuestion].question);
       
       function startTimer() {
           if(!timerGo) {
@@ -77,6 +77,7 @@ $(function() {
           timer--;
           console.log(timer)
           if(timer === -1) {
+              unanswered++;
               stopTimer();
           }
       }
@@ -86,4 +87,24 @@ $(function() {
           clearInterval(timerID);
           $('.timer').html('<h2>You Took to long!');
       }
+      
+      function displayQuestion() {
+          $('.questions').html(game[currentQuestion].question);
+            var answer = game[currentQuestion].answers;
+          for(i = 0; i < answer.length; i++){
+            console.log(answer[i])
+            x = $('<div>');
+            x.text(answer[i]);
+             $('.answers').append(x);
+          }
+      }
+      
+      $('.start').on('click', function() {
+        $(this).hide();
+        $('.start-pic').fadeOut();
+        $('answers').show();
+        $('.questions').show();
+        startTimer();
+        displayQuestion();
+    })
 });

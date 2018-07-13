@@ -1,9 +1,9 @@
-$(function() {
+$(function () {
     //game array filled with objects
     var game = [
         {
             question: 'According to Ron Swanson cats are... ',
-            answers: ['amazing', 'better then dogs', 'pointless', 'stupid'],
+            answers: ['Amazing', 'Better then dogs', 'Pointless', 'Stupid'],
             correct: 2,
             gif: './images/ron.gif'
         },
@@ -59,6 +59,7 @@ $(function() {
     var currentQuestion = 0;
     var userGuess = "";
     var end = game.length;
+
     //hiding the reset button
     $('.reset').hide();
 
@@ -71,66 +72,73 @@ $(function() {
             timerGo = true;
         }
     }
-    //If the time hits 0 you can no longer answer and get a +1 to unanswered questions
+    //Countdown to get the timer to go down by 1
     function countDown() {
-        $('.timer').html('<h2>Hurry up please... ' + timer + '</h2>')
+        $('.timer').html('<h2>Hurry up please... <br>' + timer + '</h2>') //Dipsplaying the timer on the page
         timer--;
         console.log(timer)
 
-        if (timer === 0) {
-            unanswered++;
+        if (timer <= 0) {   //if it hits 0
+            unanswered++;   //unanswered goes up 1
             console.log(unanswered)
             stopTimer();
-            $('.timer').html('<h2>You Took to long!');
+            $('.answers').empty();
+            $('.timer').html('You Took to long! The Correct answer was ' + game[currentQuestion].answers[game[currentQuestion].correct]);
+            currentQuestion++;  //go to next index in game array
+            setTimeout(displayQuestion, 2000);
         }
     }
-    //stops timer
+
     function stopTimer() {
         timerGo = false;
-        timer = 10;
+        timer = 10;  //resets the timer to 10
         clearInterval(timerID);
     }
     //display question with answers add 4 buttons for answers and gives them a value 0-3
     function displayQuestion() {
-     //check if add end of game if not then go to next question      
-        if(resetGame()){}else{
-        var q = game[currentQuestion].question;
-        $('.questions').html(q);
-        var answer = game[currentQuestion].answers;
-        
-        for (i = 0; i < answer.length; i++) {
-            console.log(answer[i])
-            btn = $('<div>');
-            btn.text(answer[i]);
-            btn.addClass('button');
-            btn.attr('data-value', i);
-            $('.answers').append(btn);
-            startTimer();
+        //check if at end of game if not then go to next question      
+        if (resetGame()) {
 
+        } else {
+            var q = game[currentQuestion].question;
+            $('.questions').html(q);
+            var answer = game[currentQuestion].answers;
+
+            for (i = 0; i < answer.length; i++) {
+                console.log(answer[i])
+                btn = $('<div>');
+                btn.text(answer[i]);
+                btn.addClass('button');
+                btn.attr('data-value', i);
+                $('.answers').append(btn);
+                startTimer();
+
+            }
         }
     }
-    }
     //adds a gif to image div
-      function showGif() {
-          var gif = game[currentQuestion].gif;
-          console.log('about to')
-         $('.timer').empty();
-         $('.image').append('<img id="image" src=' + gif + '></img>')
-      }
+    function showGif() {
+        var gif = game[currentQuestion].gif;
+        console.log('about to')
+        $('.timer').empty();
+        $('.image').append('<img id="image" src=' + gif + '></img>')
+    }
+
 
     function checkCorrect() {
-       //if userGuess is the correct answer
+        //if userGuess is the correct answer
         if (userGuess === game[currentQuestion].correct) {
             stopTimer(); //stop timer
             right++;    //plus 1 to correct answers
             showGif();  //show Gif
-           
-            $('.answers').empty();  
+
+            $('.answers').empty();
             $('.questions').empty();
             currentQuestion++;      //Plus one to game index
-            setTimeout(function(){      
-                 $('#image').remove();     //removes gif
-                 displayQuestion();        //Displays next question
+            setTimeout(function () {
+                $('#image').remove();     //removes gif
+                displayQuestion();      //Displays next question
+
             }, 3000);
 
         } else {
@@ -141,35 +149,52 @@ $(function() {
             $('.question').empty();
             //emptys divs and shows correct answer
             $('.answers').html('Wrong! The correct answer is: ' + game[currentQuestion].answers[game[currentQuestion].correct])
-           currentQuestion++;       //plus one to game index
-            setTimeout(function(){
+            currentQuestion++;       //plus one to game index
+            setTimeout(function () {
                 $('.answers').empty();  //removes text
                 displayQuestion();      //next question!
-           }, 3000);
+            }, 3000);
         }
         console.log(right)
         console.log(wrong)
     }
-    
+
 
     function resetGame() {
-        if(currentQuestion === end){
-            $('.answers').empty();
-            $('.question').empty();
+        if (currentQuestion === end) {
+            $('.questions').empty();
             $('.timer').empty();
+            $('.right').html('You got ' + right + ' Correct!')
+            $('.wrong').html('You got ' + wrong + ' Wrong!')
+            $('.unanswered').html('You forgot to answer ' + unanswered + ' questions silly!')
             $('.reset').show();
-            $('.questions').html('You got ' +right+ 'Correct')
-
             return true;
         }
+    }
+
+    function newGame() {
+        $('.reset').hide();
+        $('.answers').empty();
+        $('.questions').empty();
+        $('.timer').empty();
+        $('.right').empty();
+        $('.wrong').empty();
+        $('.unanswered').empty();
+        $('.start-pic').show();
+        $('.start').show();
     }
 
 
     //Click function hides start button and starting picture, starts timer and shows question.
     $('.start').on('click', function () {
         $(this).hide();
-        $('.start-pic').replaceWith($('.questions'));
+        $('.start-pic').hide();
+        currentQuestion = 0;
+        wrong = 0;
+        right = 0;
+        unanswered = 0;
         startTimer();
+        $('.questions').fadeIn(1000);
         $('.answers').fadeIn(1000);
         displayQuestion();
     })
@@ -179,11 +204,8 @@ $(function() {
         checkCorrect();
     })
 
-    $('.reset').on('click', function() {
-
-        $('.start-pic').show();
-        $('.start').show();
-        console.log('yea')
+    $('.reset').on('click', function () {
+        newGame()
     })
-   
+
 });

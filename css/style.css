@@ -25,26 +25,19 @@ body {
 .questions {
     text-align: center;
     font-weight: bold;
-}
-
-.answers {
-    text-align: center;
+    margin-top: 20px;
 }
 
 .start {
-    display: inline-block;
     padding: 6px 12px;
     cursor: crosshair;
     background: green;
     color: white;
-    text-align: center;
     border: 1px solid transparent;
     border-radius: 5%;
-    z-index: 1;
     position: relative;
-    top: -90px;
+    top: -100px;
 }
-
 
 .reset {
     padding: 6px 12px;
@@ -57,9 +50,22 @@ body {
 .answers {
     display: flex;
     padding: 20px;
-    justify-content: center;
+    justify-content: space-between;
+    position: relative;
+    top: 150px;
 }
 
-.answers div {
-    padding: 10px 10px;
+.button {
+    padding: 15px 20px;
+    display: flex;
+    flex-direction: row;
+    background: red;
 }
+
+.timer {
+    top: 100px;
+    position: relative;
+    text-align: center;
+}
+
+

@@ -102,8 +102,8 @@ $(function () {
         } else {
             var q = game[currentQuestion].question;
             $('.questions').html(q);
+            startTimer();
             var answer = game[currentQuestion].answers;
-
             for (i = 0; i < answer.length; i++) {
                 console.log(answer[i])
                 btn = $('<div>');
@@ -111,7 +111,7 @@ $(function () {
                 btn.addClass('button');
                 btn.attr('data-value', i);
                 $('.answers').append(btn);
-                startTimer();
+               
 
             }
         }
@@ -119,7 +119,7 @@ $(function () {
     //adds a gif to image div
     function showGif() {
         var gif = game[currentQuestion].gif;
-        console.log('about to')
+        console.log('gif test')
         $('.timer').empty();
         $('.image').append('<img id="image" src=' + gif + '></img>')
     }
@@ -147,11 +147,12 @@ $(function () {
             stopTimer();    //stops timer
             $('.answers').empty();
             $('.question').empty();
+            $('.timer').empty();
             //emptys divs and shows correct answer
-            $('.answers').html('Wrong! The correct answer is: ' + game[currentQuestion].answers[game[currentQuestion].correct])
+            $('.showcur').text('Wrong! The correct answer is: ' + game[currentQuestion].answers[game[currentQuestion].correct])
             currentQuestion++;       //plus one to game index
             setTimeout(function () {
-                $('.answers').empty();  //removes text
+                $('.showcur').empty();  //removes text
                 displayQuestion();      //next question!
             }, 3000);
         }
@@ -171,7 +172,7 @@ $(function () {
             return true;
         }
     }
-
+    //new game function that emptys all divs and resets starting screen
     function newGame() {
         $('.reset').hide();
         $('.answers').empty();
@@ -203,7 +204,7 @@ $(function () {
         userGuess = parseInt($(this).attr('data-value'))
         checkCorrect();
     })
-
+    //reset button click event to start new game
     $('.reset').on('click', function () {
         newGame()
     })

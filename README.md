@@ -21,4 +21,4 @@
 * On the final screen, show the number of correct answers, incorrect answers, and an option to restart the game (without reloading the page).
 
 # Link to Live version!
-https://github.com/HumanJBooF/TriviaGame
+https://humanjboof.github.io/TriviaGame/

@@ -39,7 +39,7 @@ $(function () {
         },
         {
             question: 'What is the name of the beloved mini-horse?',
-            answers: ["lil' Sebastion", "lil' Stevey", "lil' Horsey", "lil' Seemus"],
+            answers: ["Lil' Sebastion", "Lil' Stevey", "Lil' Horsey", "Lil' Seemus"],
             correct: 0,
             gif: './images/lil.gif'
         },
@@ -78,14 +78,15 @@ $(function () {
         timer--;
         console.log(timer)
 
-        if (timer <= 0) {   //if it hits 0
+        if (timer < 0) {   //if it hits 0
             unanswered++;   //unanswered goes up 1
             console.log(unanswered)
             stopTimer();
             $('.answers').empty();
+            $('.questions').empty();
             $('.timer').html('You Took to long! The Correct answer was ' + game[currentQuestion].answers[game[currentQuestion].correct]);
             currentQuestion++;  //go to next index in game array
-            setTimeout(displayQuestion, 2000);
+            setTimeout(displayQuestion, 3000);
         }
     }
 
@@ -101,6 +102,7 @@ $(function () {
 
         } else {
             var q = game[currentQuestion].question;
+            $('.timer').empty();
             $('.questions').html(q);
             startTimer();
             var answer = game[currentQuestion].answers;
@@ -108,14 +110,13 @@ $(function () {
                 console.log(answer[i])
                 btn = $('<div>');
                 btn.text(answer[i]);
-                btn.addClass('button');
+                btn.addClass('button animated fadeInUp');
                 btn.attr('data-value', i);
                 $('.answers').append(btn);
-               
-
             }
         }
     }
+
     //adds a gif to image div
     function showGif() {
         var gif = game[currentQuestion].gif;
@@ -130,6 +131,7 @@ $(function () {
         if (userGuess === game[currentQuestion].correct) {
             stopTimer(); //stop timer
             right++;    //plus 1 to correct answers
+            
             showGif();  //show Gif
 
             $('.answers').empty();
@@ -167,7 +169,7 @@ $(function () {
             $('.timer').empty();
             $('.right').html('You got ' + right + ' Correct!')
             $('.wrong').html('You got ' + wrong + ' Wrong!')
-            $('.unanswered').html('You forgot to answer ' + unanswered + ' questions silly!')
+            $('.unanswered').html('You forgot to answer ' + unanswered + ' questions')
             $('.reset').show();
             return true;
         }
@@ -183,20 +185,22 @@ $(function () {
         $('.unanswered').empty();
         $('.start-pic').show();
         $('.start').show();
+        $('.rules').show();
+        $('.wrapper').css({'border': '', 'background':'','box-shadow': ''})
     }
 
 
     //Click function hides start button and starting picture, starts timer and shows question.
     $('.start').on('click', function () {
         $(this).hide();
+        $('.wrapper').css({'border':'1pt solid black', 'background': '#E3DAC9', 'box-shadow': '0 0 75px black'});
         $('.start-pic').hide();
+        $('.rules').hide();
         currentQuestion = 0;
         wrong = 0;
         right = 0;
         unanswered = 0;
         startTimer();
-        $('.questions').fadeIn(1000);
-        $('.answers').fadeIn(1000);
         displayQuestion();
     })
     //click function for the answers takes the value in the userGuess variable and goes to checkCorrect function
@@ -208,5 +212,6 @@ $(function () {
     $('.reset').on('click', function () {
         newGame()
     })
+
 
 });

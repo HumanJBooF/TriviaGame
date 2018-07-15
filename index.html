@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./css/reset.css">
+    <link rel="stylesheet" type="text/css" href="./css/animate.css">
     <link rel="stylesheet" type="text/css" href="./css/style.css">
     <title>Parks and Rec Trivia</title>
 </head>
     <body>
         <h1 class="header">Trivia</h1>
         <div class="wrapper">
-            <img class="start-pic" src="./images/parks.jpg" alt="parksrec">
+            <img class="start-pic animated bounceInDown" src="./images/parks.jpg" alt="parksrec">
             <div class="timer"></div>
             <div class="image"></div>
             <div class="right"></div>
@@ -22,10 +23,14 @@
             <div class="showcur"></div>
             <div class="answers"></div>
             
-            <button class="start">Start Game!</button>
+            <button class="start animated bounceInUp">Start Game!</button>
             <button class="reset">Reset Game!</button>
+            <div class="rules animated rubberBand">
+                Just click that start button, but be warned friend you must answer each question in 10 seconds!
+            </div>
+            
         </div>
-
+            
 
         <!-- adding jquery/javescript -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

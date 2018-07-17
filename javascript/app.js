@@ -109,9 +109,7 @@ $(function () {
             for (i = 0; i < answer.length; i++) {
                 console.log(answer[i])
                 btn = $('<div>');
-                btn.text(answer[i]);
-                btn.addClass('button animated fadeInUp');
-                btn.attr('data-value', i);
+                btn.text(answer[i]).addClass('button animated fadeInUp').attr('data-value', i)
                 $('.answers').append(btn);
             }
         }
